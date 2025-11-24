@@ -1,0 +1,3 @@
+/.venv
+/chatbot_agent/.env
+/chatbot_agent/__pycache__/
