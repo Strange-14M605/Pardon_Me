@@ -1,3 +1,4 @@
-/.venv
-/pardon_me/.env
+/data/sessions.db
+/.env
 /pardon_me/__pycache__/
+/__pycache__/

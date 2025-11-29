@@ -1,9 +1,15 @@
+import os
+from dotenv import load_dotenv
 from google.adk.agents import SequentialAgent, LlmAgent
 from google.adk.models import Gemini
 from google.adk.tools import AgentTool
 from pardon_me.pipeline_agents import user_analyst, code_analyst, jargon_detector, readability_rewriter, aggregator
 
-MODEL = Gemini(model="gemini-2.5-flash-lite")
+load_dotenv()
+MODEL = Gemini(
+    model="gemini-2.5-flash-lite",
+    api_key=os.getenv("GOOGLE_API_KEY")
+)
 
 pipeline_agent = SequentialAgent(
     name="pipeline_agent",
@@ -22,11 +28,12 @@ root_agent = LlmAgent(
     model=MODEL,
     instruction = """
     You are the Root Conversation Agent. Your role is to handle user queries related to the GitHub repository.
-    For simple queries, provide direct answers using the GitHub MCP toolset.
-    For complex queries that require in-depth analysis or multiple perspectives, delegate the task to the Sequential_Specialist_Agent.
+    Your only job is:
+    ALWAYS call the `pipeline_agent` tool for every user request related to code, GitHub repositories, files, directories, or technical explanations.
+    For ALL such queries, simply pass the entire user message to `pipeline_agent` exactly as the user wrote it.
     Always ensure that your responses are accurate, concise, and relevant to the user's needs.
     """,
     tools=[AgentTool(pipeline_agent)],
 )
 
-AGENT = root_agent
+# AGENT = root_agent
