@@ -1,10 +1,10 @@
 from google.adk.agents import LlmAgent
 from google.adk.models import Gemini 
-from pardon_me.github_mcp_tool import github_mcp_tool
+from .github_mcp_tool import github_mcp_tool
 
 MODEL = Gemini(model="gemini-2.5-flash-lite")
 
-user_analyst = LlmAgent(
+user_analyst = LlmAgent(    
     name="user_analyst",
     model=MODEL,
     description="Understands what the user is actually asking for.",
@@ -24,11 +24,7 @@ code_analyst = LlmAgent(
         Using the GitHub MCP toolset and the details in {user_intent}, locate and analyze
         the relevant code. Explain the code’s purpose, behavior, internal logic,
         dependencies, and execution flow. Present the explanation in accurate but
-        approachable human language suited for general technical readers.
-        Only use tools that are available in the GitHub MCP toolset.
-        You can use `search_code` to find files and `get_file_contents` to read file contents.
-        Do NOT attempt to call tools that do not exist (e.g., list_files).
-        When you need a file list, search for `"filename"` patterns using search_code.""",
+        approachable human language suited for general technical readers.""",
     tools=[github_mcp_tool],
     output_key="code_analysis",
 )

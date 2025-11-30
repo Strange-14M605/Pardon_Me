@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Pardon Me - Chat</title>
-    <style>
-        body { font-family: Arial; background: #f4f4f4; margin: 0; padding: 0; }
-        #chatbox { width: 600px; margin: 50px auto; background: white; padding: 20px; border-radius: 10px; }
-        #messages { height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; }
-        .user { color: #1a73e8; margin-bottom: 10px; }
-        .bot { color: #444; margin-bottom: 20px; }
-        #input { width: 80%; padding: 10px; }
-        #send { padding: 10px 20px; }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<div id="chatbox">
-    <h2>Pardon Me – Repo Interpreter</h2>
+<div id="chat-container">
+    <h2>Pardon Me - your own repo interpreter</h2>
     <div id="messages"></div>
 
-    <input id="input" placeholder="Type your question...">
-    <button id="send">Send</button>
+    <div id="input-area">
+        <input id="input" placeholder="Type your question..." />
+        <button id="send">Send</button>
+    </div>
 </div>
 
-<script src="script.js"></script>
+<script src="/static/script.js"></script>
 </body>
 </html>

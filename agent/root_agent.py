@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from google.adk.agents import SequentialAgent, LlmAgent
 from google.adk.models import Gemini
 from google.adk.tools import AgentTool
-from pardon_me.pipeline_agents import user_analyst, code_analyst, jargon_detector, readability_rewriter, aggregator
+from .pipeline_agents import user_analyst, code_analyst, jargon_detector, readability_rewriter, aggregator
 
 load_dotenv()
 MODEL = Gemini(
@@ -24,7 +24,7 @@ pipeline_agent = SequentialAgent(
 
 # Define the root agent that uses the pipeline agent as a tool
 root_agent = LlmAgent(
-    name= "Root_Conversation_Agent",
+    name= "Pardon_Me",
     model=MODEL,
     instruction = """
     You are the Root Conversation Agent. Your role is to handle user queries related to the GitHub repository.

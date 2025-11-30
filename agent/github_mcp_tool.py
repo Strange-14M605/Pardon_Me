@@ -13,7 +13,7 @@ github_mcp_tool = McpToolset(
                 url="https://api.githubcopilot.com/mcp/",
                 headers={
                     "Authorization": f"Bearer {GITHUB_TOKEN}",
-                    "X-MCP-Toolsets": "issues,repos",
+                    "X-MCP-Toolsets": "all",
                     "X-MCP-Readonly": "true"
                 },
                 timeout = 30,

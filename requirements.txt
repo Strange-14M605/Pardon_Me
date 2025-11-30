@@ -4,3 +4,4 @@ fastapi
 uvicorn
 aiosqlite
 google-genai
+pydantic

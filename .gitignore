@@ -1,4 +1,7 @@
-/data/sessions.db
 /.env
-/pardon_me/__pycache__/
-/__pycache__/
+/.vscode
+/data/sessions.db
+
+/__pycache__
+/agent/__pycache__
+/app/__pycache__
