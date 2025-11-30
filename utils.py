@@ -1,6 +1,7 @@
 # utilities.py
 from google.adk.runners import Runner
 from google.genai.types import Content, Part
+from google.adk.events.event_actions import EventCompaction
 
 USER_ID = "default_user"
 
@@ -47,7 +48,7 @@ async def run_session(
             if text and text.strip() != "None":
                 print(f"Pardon Me > ", text)
                 fragments.append(text)
-
+    
     turn_output = "".join(fragments).strip()
 
     if turn_output:

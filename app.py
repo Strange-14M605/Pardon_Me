@@ -8,9 +8,12 @@ from fastapi.responses import FileResponse
 
 from google.adk.sessions import DatabaseSessionService
 from google.adk.runners import Runner
+from google.adk.plugins.logging_plugin import (
+    LoggingPlugin,
+)
 
 from agent.root_agent import root_agent
-from utilities import run_session   
+from utils import run_session
 
 app = FastAPI()
 
@@ -34,9 +37,13 @@ session_service = DatabaseSessionService(db_url=DB_URL)
 runner = Runner(
     app_name="pardon_me",
     agent=root_agent,
-    session_service=session_service
+    session_service=session_service,
+    plugins = [
+        LoggingPlugin()
+    ]
 )
 print(" Runner instance created with name:", runner.app_name)
+
 
 # serve static files (UI) at "/" endpoint
 app.mount("/static", StaticFiles(directory="static"), name="static")
