@@ -1,7 +1,16 @@
 # Pardon_Me
-A GitHub Repo Insight Agent
+#### A GitHub Repo Insight Agent
+[Problem](#1-problem) •
+[Solution](#2-solution) •
+[Journey](#3-project-journey-and-evolution) •
+[Multi-Agent Architecture](#4-agent-architecturepipeline) •
+[High-Level Overview](#5-high-level-overview--project-structure) •
+[Setup](#6-instructions-for-setup) •
+[Design](#7-title-and-design) •
+[Future](#8-future-enhancements) •
+[Resources](#9-list-of-resources)
 
-## Problem
+## 1. Problem
 Large GitHub repositories often read like dense technical forests—layers of code, scattered documentation, and enough jargon to overwhelm even experienced developers. The result is slow onboarding, unnecessary confusion, and a constant sense of “Where do I even start?”
 
 I can see it affecting various types of people including:
@@ -12,13 +21,13 @@ I can see it affecting various types of people including:
   
 The bottleneck isn't just about missing documentation—it's about the gap between how code is written and how humans naturally understand systems.
 
-## Solution
+## 2. Solution
 This project grew out of that gap—a desire to make repositories a little less intimidating and a lot more readable.
 
 Pardon_Me is a focused multi-agent system that understands user intent, analyzes the repo via GitHub MCP, identifies jargon, and produces a clear, accessible interpretation, while still allowing users to engage with it conversationally. They can ask follow-up questions, clarify unclear sections, or dive deeper into specific components—much like consulting a well-informed teammate who already understands the entire repository.
 
 
-## Project Journey and Evolution
+## 3. Project Journey and Evolution
 
 Pardon_Me started off as a an idea that involved Parallel execution where each sub agent would analyse the code from different stakeholder POVs like a designer, product manager, QA engineer, etc. And then provide the user with an aggregated insight. The idea seemed solid but I had to pivot pretty quickly due to Github constraints and timeouts when I called the MCP for each sub-agent simultaneously. One workaround was to align the agents sequentially, but that defeated the entire purpose of parallel execution. 
 
@@ -29,7 +38,7 @@ Finally, I settled on a SequentialAgent solution where we could dedicate each ag
 2. AgentTool's output isn't a valid adk event so when I tried to retrieve it for context compaction, it returned format errors. (I wasn't able to fix this - [an open issue](https://github.com/google/adk-python/issues/3633) )
 
 
-## Agent Architecture/Pipeline
+## 4. Agent Architecture/Pipeline
 
 <img width="1062" height="791" alt="image" src="https://github.com/user-attachments/assets/e1f49a37-dee6-4564-a067-46989449021a" />
 
@@ -83,7 +92,7 @@ jargon_detector → output_key="jargon_list"
 readability_rewriter → output_key="readable_code_analysis"
 aggregator → output_key="final_report"
 ```
-### NOTE: Session Persistence
+### 4.1 Session Persistence
 
 Conversations are stored in SQLite, allowing users to:
 - Continue previous conversations
@@ -92,7 +101,10 @@ Conversations are stored in SQLite, allowing users to:
 ```python
 session_service = DatabaseSessionService(db_url="sqlite+aiosqlite:///data/sessions.db")
 ```
-### Summary of Features
+### 4.2 Observability
+To keep the whole pipeline transparent, I added an observability layer using LoggingPlugin(). It captures every step each agent takes—tools invoked, intermediate outputs, decisions, and even small reasoning breadcrumbs. Instead of leaving you guessing what the system is doing behind the curtain, the logs stream in real time on your terminal. It feels a bit like peeking into the brain of the agent chain as it collaborates, making it far easier to debug, track bottlenecks, or simply understand how the multi-agent pipeline behaves when processing a query.
+
+### 4.3 Summary of Features
 
 - **Multi-layered Analysis/ Multi-Agent system**: Combines technical depth with beginner-friendly explanations with the help of Sequential Agents
 - **Conversational Understanding**: Users can ask follow-up questions, clarify unclear sections, or dive deeper into specific components—much like consulting a well-informed teammate who already understands the entire repository
@@ -101,7 +113,7 @@ session_service = DatabaseSessionService(db_url="sqlite+aiosqlite:///data/sessio
 - **Streaming Responses**: Real-time agent output processing
 - **Modular Design**: Each agent has a single, well-defined responsibility
   
-## High Level Overview & Project Structure
+## 5. High Level Overview & Project Structure
 
 <img width="1407" height="772" alt="image" src="https://github.com/user-attachments/assets/a8f2f65a-33b2-4b4d-8d84-55be880aa76f" />
 
@@ -112,7 +124,7 @@ session_service = DatabaseSessionService(db_url="sqlite+aiosqlite:///data/sessio
 - **Session Management**: SQLite database for persistent conversations
 - **Frontend**: Vanilla HTML/CSS/JavaScript (served statically)
 
-### Project Structure
+### 5.1 Project Structure
 ```
 pardon_me/
 ├── agent/
@@ -133,7 +145,7 @@ pardon_me/
 └── utils.py                     # Session management utilities
 ```
 
-## Instructions for Setup
+## 6. Instructions for Setup
 
 ### Prerequisites
 
@@ -206,7 +218,7 @@ Try asking:
 > <img width="1426" height="682" alt="image" src="https://github.com/user-attachments/assets/23ef38e5-f7c4-464a-ae28-88d04674aa5b" />
 
 
-## Title and design 
+## 7. Title and design 
 I titled the project **Pardon_Me** after the numerous times I've had to ask someone to repeat themselves when they seem to talk in another language made up of technical jargon! I find myself muttering it to myself while scrambling through a Github Repo I just opened as well. 
 
 As for the design, I just wanted something warm to work with while I practice. This was the initial prototype:
@@ -214,14 +226,14 @@ As for the design, I just wanted something warm to work with while I practice. T
 <img width="328" height="313" alt="image" src="https://github.com/user-attachments/assets/33db5098-9dae-476a-885b-030a3dd94c0b" />
 
 
-## Future Enhancements
+## 8. Future Enhancements
 
 - **Enhanced UI**: Rich code syntax highlighting and interactive diagrams
 - **Advanced Analysis**: Detect code smells, security issues, and architectural patterns
 - **Advanced Features**: Allow user with non-tech backgrounds to edit code using simple commands
 - **Deployment** (obviously🥹): Cloud deployment using Google Cloud Run or similar platform
 
-## List of Resources
+## 9. List of Resources
 [Kaggle: 5-Day AI Agents Intensive Course with Google]([https://example.com](https://www.kaggle.com/learn-guide/5-day-agents))
 [Google ADK Docs]([https://example.com](https://google.github.io/adk-docs/))
 [Remote GitHub MCP Server](https://github.com/github/github-mcp-server/blob/main/docs/remote-server.md)
